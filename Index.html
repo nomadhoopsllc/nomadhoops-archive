@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Archive — Streetball Culture History | Nomadhoops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0a0a0a;
+    --charcoal:#151412;
+    --card:#1c1a17;
+    --orange:#FF8C00;
+    --rust:#B3450E;
+    --bone:#EDE7DA;
+    --bone-dim:#9C9587;
+    --tape-amber:#E8B04B;
+    --line:#332F28;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--black);
+    color:var(--bone);
+    font-family:'Oswald',sans-serif;
+    font-weight:400;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events:none; z-index:200; mix-blend-mode:overlay;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .wrap{max-width:900px; margin:0 auto; padding:0 24px;}
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative; min-height:70vh;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding:70px 0 50px; border-bottom:1px solid var(--line);
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(255,140,0,0.10), transparent 55%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 3px);
+  }
+  .tape-label{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:3px;
+    color:var(--tape-amber); text-transform:uppercase;
+    border:1px solid var(--tape-amber); padding:6px 14px; margin-bottom:24px;
+  }
+  .tape-label .dot{width:6px;height:6px;border-radius:50%;background:var(--rust);animation:rec 1.6s infinite;}
+  @keyframes rec{0%,100%{opacity:1;}50%{opacity:0.15;}}
+  .hero h1{
+    font-family:'Anton',sans-serif; font-weight:400;
+    font-size:clamp(40px, 9vw, 90px); line-height:0.9;
+    text-transform:uppercase; letter-spacing:-1px; color:var(--bone);
+  }
+  .hero h1 span{color:var(--orange); display:block;}
+  .hero p{max-width:520px; margin-top:22px; color:var(--bone-dim); font-size:16px; line-height:1.6; font-weight:300;}
+
+  /* ===== NAV TABS ===== */
+  .tabs{
+    position:sticky; top:0; z-index:100;
+    background:rgba(10,10,10,0.96); backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+    display:flex; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  .tab-btn{
+    flex:0 0 auto; padding:16px 20px;
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:1.5px;
+    text-transform:uppercase; color:var(--bone-dim);
+    background:none; border:none; border-bottom:3px solid transparent;
+    cursor:pointer; white-space:nowrap;
+  }
+  .tab-btn.active{color:var(--orange); border-bottom-color:var(--orange);}
+  .tab-panel{display:none; padding:48px 0;}
+  .tab-panel.active{display:block;}
+
+  section-title, .section-title{
+    display:block; font-family:'Anton',sans-serif; font-size:28px;
+    text-transform:uppercase; letter-spacing:0.5px; margin-bottom:22px; color:var(--bone);
+  }
+
+  /* crew sub-nav */
+  .crew-nav{display:flex; gap:10px; margin-bottom:28px; flex-wrap:wrap;}
+  .crew-btn{
+    font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:1px;
+    text-transform:uppercase; color:var(--bone-dim); background:var(--card);
+    border:1px solid var(--line); padding:8px 16px; border-radius:20px; cursor:pointer;
+  }
+  .crew-btn.active{color:var(--black); background:var(--orange); border-color:var(--orange);}
+  .crew-panel{display:none;}
+  .crew-panel.active{display:block;}
+  .crew-tag{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--tape-amber); letter-spacing:1px; margin-bottom:10px;}
+
+  .vol-list{display:flex; flex-direction:column; gap:0;}
+  .vol-row{display:flex; gap:18px; padding:18px 0; border-bottom:1px solid var(--line);}
+  .vol-row:last-child{border-bottom:none;}
+  .vn{font-family:'Anton',sans-serif; font-size:22px; color:var(--rust); width:34px; flex-shrink:0;}
+  .vt{font-weight:600; font-size:16px; color:var(--bone); display:block;}
+  .vy{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--bone-dim); margin-left:10px; font-weight:400;}
+  .vd{color:var(--bone-dim); font-size:14.5px; line-height:1.65; margin-top:8px; max-width:640px;}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:6px; padding:24px; margin-bottom:16px;}
+  .card h4{font-family:'Anton',sans-serif; font-size:18px; color:var(--orange); margin-bottom:8px; text-transform:uppercase;}
+  .card p{color:var(--bone-dim); font-size:14.5px; line-height:1.65;}
+
+  .note{
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--bone-dim);
+    border-left:2px solid var(--rust); padding-left:14px; margin:24px 0; line-height:1.7;
+  }
+
+  footer{
+    border-top:1px solid var(--line); padding:36px 0; text-align:center;
+    color:var(--bone-dim); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:1px;
+  }
+  a{color:var(--orange);}
+
+  @media(max-width:600px){
+    .hero{min-height:60vh; padding:50px 0 36px;}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="tape-label"><span class="dot"></span>REC — ARCHIVE VOL. 01</div>
+    <h1>THE<span>ARCHIVE</span></h1>
+    <p>A running record of streetball culture — the crews, the courts, the mixtapes, and the players who built it. Maintained by Nomadhoops.</p>
+  </div>
+</section>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="crews">Streetball Crews</button>
+  <button class="tab-btn" data-tab="parks">Legendary Parks</button>
+  <button class="tab-btn" data-tab="moves">Signature Moves</button>
+  <button class="tab-btn" data-tab="video">Video Proof</button>
+</nav>
+
+<div class="wrap">
+
+  <!-- CREWS TAB -->
+  <div class="tab-panel active" id="crews">
+    <span class="section-title">Streetball Crews</span>
+    <div class="crew-nav">
+      <button class="crew-btn active" data-crew="crew-and1">AND1</button>
+      <button class="crew-btn" data-crew="crew-notic">The Notic</button>
+      <button class="crew-btn" data-crew="crew-nomadhoops">Nomadhoops</button>
+    </div>
+
+    <div id="crew-and1" class="crew-panel active">
+      <div class="crew-tag">Founded 1993 — Streetball's biggest stage</div>
+      <div class="vol-list">
+        <div class="vol-row"><div class="vn">01</div><div><span class="vt">The Mixtape Tour<span class="vy">Est. late 1990s</span></span><div class="vd">AND1 built its identity on street basketball, releasing a series of mixtape videos capturing playground legends — Hot Sauce, Skip 2 My Lou, The Professor, Escalade, and others — performing in front of packed crowds. The mixtapes became a cultural phenomenon, eventually leading to the live AND1 Mixtape Tour, which traveled to cities across the country pairing AND1 players against local street legends.</div></div></div>
+        <div class="vol-row"><div class="vn">02</div><div><span class="vt">Cultural Impact<span class="vy">Streetball goes mainstream</span></span><div class="vd">AND1's tapes were many fans' first exposure to streetball style — crossovers, trick handles, and showmanship prioritized over traditional fundamentals. The tour and tapes helped launch or elevate careers for numerous players and created a template later carried forward by digital-era platforms like Ballislife and The Next Chapter.</div></div></div>
+      </div>
+    </div>
+
+    <div id="crew-notic" class="crew-panel">
+      <div class="crew-tag">Vancouver, BC — Underground scene</div>
+      <div class="vol-list">
+        <div class="vol-row"><div class="vn">01</div><div><span class="vt">Origins<span class="vy">Vancouver underground</span></span><div class="vd">The Notic represents the Vancouver streetball scene — grassroots events built around local talent, DIY production, and a tight-knit community rather than national media attention. Nomadhoops has collaborated directly on Notic events, including annual gatherings at Grays Park.</div></div></div>
+        <div class="vol-row"><div class="vn">02</div><div><span class="vt">The Notic Day<span class="vy">Annual event</span></span><div class="vd">An annual community event bringing Vancouver's streetball scene together for competition, content, and culture — Nomadhoops has been an active collaborator in recent years, including content production alongside King Handles.</div></div></div>
+      </div>
+    </div>
+
+    <div id="crew-nomadhoops" class="crew-panel">
+      <div class="crew-tag">Est. 2010 — Founder: Lorenzo "Zobeone Kenobi" Baxter</div>
+      <div class="vol-list">
+        <div class="vol-row"><div class="vn">01</div><div><span class="vt">Origins<span class="vy">2010</span></span><div class="vd">Founded by Lorenzo "Zobeone Kenobi" Baxter as a platform dedicated to preserving, representing, and advancing streetball culture. The name reflects a life built around going wherever basketball is being played — Nomadhoops has never been tied to one court, one city, or one league. Its identity is rooted in movement, competition, history, culture, and connection, captured in the brand's defining statement: <i>"We have no homecourt, but we'll take yours."</i></div></div></div>
+        <div class="vol-row"><div class="vn">02</div><div><span class="vt">The Founder<span class="vy">Zobeone Kenobi</span></span><div class="vd">Lorenzo Baxter brings firsthand experience as a player, historian, content creator, archivist, and cultural connector. His background includes recognition and participation connected to the AND1 Mixtape Tour era, the Miller Lite Go Pro Challenge on NBA TV, SLAM Magazine, and USA Basketball's 3x3 National Player Pool Alumni under the FIBA 3x3 format. That experience lets Nomadhoops document the culture from the perspective of someone who has lived it — not simply observed it.</div></div></div>
+        <div class="vol-row"><div class="vn">03</div><div><span class="vt">The Mission<span class="vy">Document &amp; Preserve</span></span><div class="vd">Streetball history has often been scattered across VHS tapes, DVDs, magazines, old websites, photographs, and personal memories — many influential players, events, and courts were never properly recorded. Nomadhoops works to bring those stories together in one place, before they're lost.</div></div></div>
+        <div class="vol-row"><div class="vn">04</div><div><span class="vt">Four Responsibilities<span class="vy">Compete · Connect · Document · Preserve</span></span><div class="vd">Nomadhoops operates on four pillars: competing at the highest level the culture allows, connecting streetball communities across cities and generations, documenting the people and moments that define the game, and preserving that record for those who come after.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARKS TAB -->
+  <div class="tab-panel" id="parks">
+    <span class="section-title">Legendary Parks</span>
+    <div class="card">
+      <h4>Rucker Park</h4>
+      <p>Harlem, New York. The most storied court in streetball history — home to the Rucker Tournament since the 1950s, where NBA legends and playground legends have shared the same blacktop. A cornerstone reference point for streetball culture worldwide.</p>
+    </div>
+    <div class="note">More park entries to be added as research continues.</div>
+  </div>
+
+  <!-- MOVES TAB -->
+  <div class="tab-panel" id="moves">
+    <span class="section-title">Signature Moves</span>
+    <div class="card">
+      <h4>KNEE-GOD</h4>
+      <p>2001 — Signature move documented as part of Lorenzo "Zobeone Kenobi" Baxter's on-court arsenal.</p>
+    </div>
+    <div class="card">
+      <h4>Sideline Shuffle</h4>
+      <p>1999 — Signature move documented as part of Lorenzo "Zobeone Kenobi" Baxter's on-court arsenal.</p>
+    </div>
+    <div class="card">
+      <h4>Hadouken</h4>
+      <p>2024 — Signature move documented as part of Lorenzo "Zobeone Kenobi" Baxter's on-court arsenal.</p>
+    </div>
+    <div class="note">Full mechanics breakdowns and additional players' signature moves to be re-added over time.</div>
+  </div>
+
+  <!-- VIDEO TAB -->
+  <div class="tab-panel" id="video">
+    <span class="section-title">Video Proof</span>
+    <div class="note">Sourced video and documentary links (YouTube, IMDb) to be re-added here. All outbound links use rel="noopener noreferrer" for security.</div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    "The game does not belong to one court. It belongs to everyone willing to travel, compete, and carry the culture forward." — Nomadhoops
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+  document.querySelectorAll('.crew-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.crew-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.crew-panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.crew).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
